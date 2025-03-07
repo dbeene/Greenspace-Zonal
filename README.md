@@ -13,24 +13,24 @@ $$
 
 Where:
 
-- \( P_{ij} \) is the proportion of land use \( i \) (e.g., greenspace) in area \( j \) (e.g., 1-km grid cells or other polygon), and
-- \( n_j \) is the number of distinct land uses in area \( j \).
+- $P_{ij}$ is the proportion of land use $i$ (e.g., greenspace) in area $j$ (e.g., 1-km grid cells or other polygon), and
+- $n_j$ is the number of distinct land uses in area $j$.
 
-However, this approach does not account for the presence of residential areas, which is a crucial consideration for predicting physical activity/interaction with greenspaces, so a residential area coefficient, \( R \), is calculated as:
+However, this approach does not account for the presence of residential areas, which is a crucial consideration for predicting physical activity/interaction with greenspaces, so a residential area coefficient, $R$, is calculated as:
 
 $$
 R = \frac{r_j}{T_j}
 $$
 
-where \( r_j \) is the number of residential pixels (CDL class 122 – developed/low intensity) in area \( j \), and \( T_j \) is the number of pixels in area \( j \). Finally, because entropy measures emphasize diversity of LU/LC, we apply a random correction to 1-km cells where all CDL pixels are classified as greenspace. This ensures that larger homogeneous greenspaces that may be less immediately accessible than neighborhood parks or other greenspaces that are adjacent to residential areas are still characterized as accessible greenspace but are overall weighted lower given the absence of residential land cover.
+where $r_j$ is the number of residential pixels (CDL class 122 – developed/low intensity) in area $j$, and $T_j$ is the number of pixels in area $j$. Finally, because entropy measures emphasize diversity of LU/LC, we apply a random correction to 1-km cells where all CDL pixels are classified as greenspace. This ensures that larger homogeneous greenspaces that may be less immediately accessible than neighborhood parks or other greenspaces that are adjacent to residential areas are still characterized as accessible greenspace but are overall weighted lower given the absence of residential land cover.
 
-We do this by randomly adjusting the number of target greenspace pixels \( n_j \) if it equals \( T_j \), the number of pixels in a grid cell. The adjusted proportion of matching greenspace pixels, \( \tilde{P}_{ij} \), is notated as:
+We do this by randomly adjusting the number of target greenspace pixels $n_j$ if it equals $T_j$, the number of pixels in a grid cell. The adjusted proportion of matching greenspace pixels, $\tilde{P}_{ij}$, is notated as:
 
 $$
 \tilde{P}_{ij} = \frac{T_j - \delta_j}{T_j}
 $$
 
-where \( \delta_j \) is a random adjustment term defined as \( \delta_j \in \lfloor 1,10 \rfloor \) applied when \( n_j = T_j \). The adjusted entropy index is thus:
+where $\delta_j$ is a random adjustment term defined as $\delta_j \in \lfloor 1,10 \rfloor$ applied when $n_j = T_j$. The adjusted entropy index is thus:
 
 $$
 \tilde{EI} = \frac{\sum P_{ij} \ln(P_{ij})}{\ln n_j} \cdot (1 + R_j)
